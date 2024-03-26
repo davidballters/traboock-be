@@ -1,75 +1,49 @@
-CREATE DATABASE  IF NOT EXISTS traboockdb;
+CREATE DATABASE IF NOT EXISTS traboockdb;
 
 USE traboockdb;
 
-CREATE TABLE users (
-  id INT PRIMARY KEY,
-  name VARCHAR(255),
-  email VARCHAR(255) UNIQUE,
-  password VARCHAR(255),
-  birth_date DATE,
-  document_number VARCHAR(20),
-  registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  registration_ip_address VARCHAR(15)
+CREATE TABLE IF NOT EXISTS user (
+  user_id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE tour_packages (
-  id INT PRIMARY KEY,
-  name VARCHAR(255),
-  description TEXT,
-  destination VARCHAR(255),
-  start_date DATE,
-  end_date DATE,
-  price DECIMAL(10, 2),
-  PRIMARY KEY (id)
+INSERT INTO user (username, email, password) 
+VALUES ('nombre_usuario', 'correo@ejemplo.com', 'contraseña');
+
+CREATE TABLE IF NOT EXISTS destinos (
+  destino_id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(255) NOT NULL,
+  descripcion TEXT,
+  imagen_url VARCHAR(255)
 );
 
-CREATE TABLE reservations (
-  id INT PRIMARY KEY,
-  user_id INT,
-  package_id INT,
-  reservation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  status VARCHAR(20), -- e.g., pending, confirmed, canceled
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (package_id) REFERENCES tour_packages(id)
+INSERT INTO destinos (nombre, descripcion, imagen_url)
+VALUES ('Nombre Destino', 'Descripción del destino', 'url_de_la_imagen.jpg');
+
+
+CREATE TABLE IF NOT EXISTS blog (
+  blog_id INT AUTO_INCREMENT PRIMARY KEY,
+  titulo VARCHAR(255) NOT NULL,
+  contenido TEXT,
+  usuario_id INT,
+  FOREIGN KEY (usuario_id) REFERENCES user(user_id)
 );
 
-CREATE TABLE comments_ratings (
-  id INT PRIMARY KEY,
-  user_id INT,
-  package_id INT,
-  comment TEXT,
-  rating INT,
-  date_posted TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (package_id) REFERENCES tour_packages(id)
+INSERT INTO blog (titulo, contenido, usuario_id) 
+VALUES ('Título del Blog', 'Contenido del blog', id_del_usuario);
+
+CREATE TABLE IF NOT EXISTS experiencias (
+  experiencia_id INT AUTO_INCREMENT PRIMARY KEY,
+  titulo VARCHAR(255) NOT NULL,
+  descripcion TEXT,
+  usuario_id INT,
+  destino_id INT,
+  FOREIGN KEY (usuario_id) REFERENCES user(user_id),
+  FOREIGN KEY (destino_id) REFERENCES destinos(destino_id)
 );
 
-CREATE TABLE image_gallery (
-  id INT PRIMARY KEY,
-  package_id INT,
-  image_path VARCHAR(255),
-  description TEXT,
-  FOREIGN KEY (package_id) REFERENCES tour_packages(id)
-);
+INSERT INTO experiencias (titulo, descripcion, usuario_id, destino_id) 
+VALUES ('Título de la Experiencia', 'Descripción de la experiencia', id_del_usuario, id_del_destino);
 
-CREATE TABLE tour_categories (
-  id INT PRIMARY KEY,
-  name VARCHAR(255),
-  description TEXT
-);
-
-CREATE TABLE destinations (
-  id INT PRIMARY KEY,
-  name VARCHAR(255),
-  description TEXT,
-  attractions TEXT
-);
-
-CREATE TABLE tour_package_categories (
-  package_id INT,
-  category_id INT,
-  PRIMARY KEY (package_id, category_id),
-  FOREIGN KEY (package_id) REFERENCES tour_packages(id),
-  FOREIGN KEY (category_id) REFERENCES tour_categories(id)
-);
