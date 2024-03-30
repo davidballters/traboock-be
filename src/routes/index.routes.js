@@ -1,9 +1,9 @@
-import { Router } from "express";
-import {users} from '../controllers/index.controller.js'
+import { Router } from 'express'
+
+import { health } from '../controllers/index.controller.js'
 
 const router = Router()
 
+router.get('/health', health)
 
-router.get('/users', users );
-
-export default router;
+export default router
