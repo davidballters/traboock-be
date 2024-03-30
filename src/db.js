@@ -1,6 +1,7 @@
 import { createPool } from 'mysql2/promise'
-import * as config from './config.js'
+import { Sequelize } from 'sequelize'
 
+import * as config from './config.js'
 
 export const Pool = createPool({
   host: config.DB_HOST,
@@ -10,4 +11,12 @@ export const Pool = createPool({
   database: config.DB_DATABASE,
 })
 
-export default Pool;
+export const sequelize = new Sequelize({
+  username: config.DB_USER,
+  password: config.DB_PASSWORD,
+  database: config.DB_DATABASE,
+  host: config.DB_HOST,
+  dialect: 'mysql'
+})
+
+export default Pool
