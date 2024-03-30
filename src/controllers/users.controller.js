@@ -1,7 +1,10 @@
-export const getUsers = (req, res) => res.send('OK desde users')
+import { User } from '../models/user.model.js'
 
-export const createUsers =(req, res) => res.send('OK desde users')
+export const getAll = async (req, res) => {
+  const users = await User.findAll()
+  return res.json(users)
+}
 
-export const updateUsers =(req, res) => res.send('OK desde users')
+export const updateProfile = (req, res) => res.send('actualizando desde users')
 
-export const deleteUsers =(req, res) => res.send('OK desde users')
+export const deleteUser = (req, res) => res.send('eliminando  desde users')

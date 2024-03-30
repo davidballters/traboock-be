@@ -1,17 +1,12 @@
-import { Router } from 'express';
-import {getUsers, createUsers, updateUsers, deleteUsers} from '../controllers/users.controller.js'
+import { Router } from 'express'
 
+import * as usersController from '../controllers/users.controller.js'
+import { authenticated } from '../middlewares/authenticated.js'
 
-const router = Router();
+const userRouter = Router()
 
-router.get('/users', getUsers, )
+userRouter.get('/', authenticated, usersController.getAll)
+userRouter.put('/', authenticated, usersController.updateProfile)
+userRouter.delete('/', authenticated, usersController.deleteUser)
 
-router.post('/users', createUsers)
-
-router.put('/users', updateUsers)
-
-router.delete('/users', deleteUsers )
-
-
-export default router;
- 
+export default userRouter
