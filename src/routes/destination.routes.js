@@ -3,8 +3,7 @@ import Joi from 'joi'
 
 import * as destinationController from '../controllers/destination.controller.js'
 import { validateBody } from '../middlewares/validateBody.js'
-
-// import { authenticated } from '../middlewares/authenticated.js'
+import { authenticated } from '../middlewares/authenticated.js'
 
 const destinationRouter = Router()
 
@@ -15,7 +14,7 @@ const createDestinationSschema = Joi.object({
   description: Joi.string().required(),
 })
 
-destinationRouter.post('/', validateBody(createDestinationSschema), destinationController.create)
+destinationRouter.post('/', [validateBody(createDestinationSschema),authenticated], destinationController.create)
 
 const updateDestinationSschema = Joi.object({
   name: Joi.string().required(),

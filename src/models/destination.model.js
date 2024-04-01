@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize'
 
-import { Experience } from './experience.model.js'
+// import { Experience } from './experience.model.js'
 import { sequelize } from '../db.js'
 
 export const Destination = sequelize.define('destinations', {
@@ -13,4 +13,7 @@ export const Destination = sequelize.define('destinations', {
   }
 })
 
-Destination.hasMany(Experience)
+// Destination.hasMany(Experience)
+// Destination.hasMany(Experience)
+// Experience.belongsTo(Destination)
+

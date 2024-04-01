@@ -13,4 +13,7 @@ export const Tour = sequelize.define('toures', {
   }
 })
 
-Tour.hasMany(Destination)
+
+Tour.belongsToMany(Destination, { through: 'tour_destinations' });
+Destination.belongsToMany(Tour, { through: 'tour_destinations' });
+

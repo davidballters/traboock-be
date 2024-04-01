@@ -1,14 +1,23 @@
+import { User } from '../models/user.model.js'
 import { Experience } from '../models/experience.model.js'
+import { Destination } from '../models/destination.model.js'
 
 export const getAll = async (req, res) => {
-  const experiences= await Experience.findAll()
+  const experiences = await Experience.findAll({ include:[User, Destination] })
   return res.json(experiences)
 }
 
 export const create = async (req, res) => {
   const body = req.body
-  const experience = await Experience.create(body)
+  const experience = await Experience.create({
+    name: body.name,
+    description: body.description,
+    userId: req.user.id,                  
+    destinationId: body.destination,
+  })
+   
   return res.json(experience)
+
 }
 
 export const update = async (req, res) => {

@@ -5,7 +5,7 @@ import * as blogController from '../controllers/blog.controller.js'
 import { validateBody } from '../middlewares/validateBody.js'
 
 // TOOD: Add authenticated middleware
-// import { authenticated } from '../middlewares/authenticated.js'
+import { authenticated } from '../middlewares/authenticated.js'
 
 const blogRouter = Router()
 
@@ -15,7 +15,7 @@ const createBlogSchema = Joi.object({
   title: Joi.string().required(),
   content: Joi.string().required(),
 })
-blogRouter.post('/', validateBody(createBlogSchema), blogController.create)
+blogRouter.post('/',[ validateBody(createBlogSchema), authenticated ], blogController.create)
 
 const updateBlogSchema = Joi.object({
   title: Joi.string().required(),

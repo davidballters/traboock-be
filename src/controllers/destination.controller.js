@@ -1,13 +1,18 @@
 import { Destination } from '../models/destination.model.js'
+import { User } from '../models/user.model.js'
 
 export const getAll = async (req, res) => {
-  const destinations = await Destination.findAll()
+  const destinations = await Destination.findAll({include: User})
   return res.json(destinations)
 }
 
 export const create = async (req, res) => {
   const body = req.body
-  const destination = await Destination.create(body)
+  const destination = await Destination.create({
+    name: body.name, 
+    description: body.description,
+    userId: req.user.id 
+  })
   return res.json(destination)
 }
 

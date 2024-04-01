@@ -1,6 +1,7 @@
 import { DataTypes } from 'sequelize'
 
 import { sequelize } from '../db.js'
+// import { User } from './user.model.js'
 
 export const Blog = sequelize.define('blogs', {
   title: {
@@ -12,3 +13,5 @@ export const Blog = sequelize.define('blogs', {
     allowNull: false
   },
 })
+
+

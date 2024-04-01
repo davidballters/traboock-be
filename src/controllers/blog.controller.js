@@ -1,15 +1,21 @@
+// import { object } from 'joi'
+import { User } from '../models/user.model.js'
 import { Blog } from '../models/blog.model.js'
 
 export const getAll = async (req, res) => {
   // TODO: just get the blogs that the user is owner
   // const blogs = await Blog.findAll({ where: { userId: req.user.id } })
-  const blogs = await Blog.findAll()
+  const blogs = await Blog.findAll({ include: User})
   return res.json(blogs)
 }
 
 export const create = async (req, res) => {
   const body = req.body
-  const blog = await Blog.create(body)
+  const blog = await Blog.create({
+    title: body.title, 
+    content: body.content,
+    userId: req.user.id 
+  })
   return res.json(blog)
 }
 

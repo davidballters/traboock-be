@@ -29,4 +29,7 @@ User.hasMany(Destination)
 User.hasMany(Experience)
 User.hasMany(Blog)
 User.hasMany(Tour)
-
+Blog.belongsTo(User)
+Destination.belongsTo(User)
+Experience.belongsTo(User)
+Tour.belongsTo(User)
